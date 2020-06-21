@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Управление майнкрафтом с помощью голоса</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script src="https://comet-server.com/CometServerApi.js"></script>
+    <script>
+        cometApi.start({
+            dev_id: 2962,
+            node: "app.comet-server.ru"
+        });
+        var socket = new WebSocket("ws://192.168.0.13:8080"); // Подключаемся к локальному сокету
+        cometApi.subscription("web_minecraft-voice-control.command", (data) => {
+            console.log(data);
+            var json = JSON.parse(data.data);
+            socket.send(json.msg);
+        });
+    </script>
+</body>
+</html>
