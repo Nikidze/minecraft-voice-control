@@ -2,13 +2,14 @@
 Попытка управления майнкрафтом с помощью голоса. Написано на JS+Python.
 
 ## Зависимости
-Python: asyncio, websocket, pyautogi
+Python: asyncio, websocket, pyautogi  
 JS: библиотека, для взаимодействия с comet-server, подключена по CDN в файле *client.html*.
 Но если изменить код, и настроить ssl на локальном хосте, то можно обойтись и без нее.
 
 ## Установка
 ### 1 вариант
 Если вы **НЕ** знаете как установить ssl на localhost
+
 1. При желании зарегистрироваться на [comet-server.com][1] и в файлах *intermediary.html* и *client.html*
 ```js
         cometApi.start({
