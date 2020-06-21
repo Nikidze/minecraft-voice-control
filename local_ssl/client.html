@@ -11,16 +11,12 @@
 <body>
     <div id="test"></div>
     <button id="input">Нажмите и говорите</button>
-    <script src="https://comet-server.com/CometServerApi.js"></script>
     <script>
-        cometApi.start({
-            dev_id: 2962,
-            node: "app.comet-server.ru"
-        });
-
         var recognizer = new webkitSpeechRecognition(); // Распознователь
         recognizer.interimResults = true; // Установка распознования, еще до того, как закончен ввод
         recognizer.lang = "ru-Ru"; // Говорить будем на великом и могучем
+        
+        var socket = new WebSocket("ws://192.168.0.13:8080"); // Подключаемся к локальному сокету
 
         var block = document.getElementById("test"); // Блок, в котором будем выводить то, что говорим
 
@@ -29,8 +25,8 @@
             const text = result[0].transcript; // Текст
             block.innerText = text; // Выводим на экран
             if (result.isFinal) { // Если человек закончил ввод
-                cometApi.web_pipe_send("web_minecraft-voice-control", "command", JSON.stringify({ msg: text })); // Отправляем посреднику
-                setTimeout(() => document.getElementById("input").click(), 200); // Автонажатие
+	      socket.send(text); // Отправляем на сервер
+              setTimeout(() => document.getElementById("input").click(), 200); // Автонажатие
             }
         };
         document.getElementById("input").onclick = () => {

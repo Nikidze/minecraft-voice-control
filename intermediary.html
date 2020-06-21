@@ -15,8 +15,7 @@
             node: "app.comet-server.ru"
         });
         var socket = new WebSocket("ws://192.168.0.13:8080"); // Подключаемся к локальному сокету
-        cometApi.subscription("web_minecraft-voice-control.command", (data) => {
-            console.log(data);
+        cometApi.subscription("web_minecraft-voice-control.command", (data) => { // Подписка на сообщения
             var json = JSON.parse(data.data);
             socket.send(json.msg);
         });
